@@ -14,3 +14,13 @@ Our career services platform streamlines the job search process for students and
  - Manage job postings
  - Select candidates for interview
  - Receive notifications for candidate applications
+
+### Student Features 
+- Account registration
+- Account login
+- Create profile
+- Upload and manage resume
+- Browse job postings
+- Apply for job postings
+- Receive notifications for interview invitations
+
