@@ -24,3 +24,7 @@ Our career services platform streamlines the job search process for students and
 - Apply for job postings
 - Receive notifications for interview invitations
 
+### Admin Features
+- Manage user profiles
+- Manage and moderate job postings
+- Monitor and control site activity
