@@ -39,7 +39,7 @@ Our career services platform streamlines the job search process for students and
 
 The front-end of the website will be developed using HTML, CSS, and JavaScript, while the back-end will be built with JavaScript, PHP. The database will be constructed using SQL, and communication between the back-end and database will be facilitated through PHP. The initial development steps will focus on creating the front-end of the website, followed by the back-end and database implementation. Finally, the React framework will be employed to enhance the overall appearance of the website.
 
-##  Team Members and Roles (6)
+##  Team Members and Roles
 
 - Abdelaziz Mekkaoui - [Abdel1107](https://github.com/Abdel1107) - Frontend Developer
 - Emeka Okechukwu - [emeka-okechukwu-dev](https://github.com/emeka-okechukwu-dev) - Backend Developer & Database Administrator
