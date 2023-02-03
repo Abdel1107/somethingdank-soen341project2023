@@ -43,7 +43,7 @@ The front-end of the website will be developed using HTML, CSS, and JavaScript, 
 
 - Abdelaziz Mekkaoui - [Abdel1107](https://github.com/Abdel1107) - Frontend Developer
 - Emeka Okechukwu - [emeka-okechukwu-dev](https://github.com/emeka-okechukwu-dev) - Backend Developer & Database Administrator
-- Ishai Cohen - [L3CH3R0](https://github.com/L3CH3R0) - Scrum Master & Database
+- Ishai Cohen - [L3CH3R0](https://github.com/L3CH3R0) - Scrum Master & Database Administrator 
 - Jeremy Rimokh - [J3rrimmy](https://github.com/J3rrimmy) - Backend Developer
 - Kadir Altinay - [kadiralt](https://github.com/kadiralt) - Backend Developer
 - Paul Touma - [Rubello21](https://github.com/Rubello21) - Backend Developer & Frontend Developer
