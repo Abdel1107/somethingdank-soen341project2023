@@ -2,7 +2,7 @@
 
 ## About Project 
 
-Our career services platform streamlines the job search process for students and employers. Students can create and update their professional profiles and apply for job postings, while employers can post opportunities and review candidate applications. With secure login credentials, the platform ensures confidential user information. Our aim is to bring job seekers and employers together in a simple and efficient manner.
+Job hunting has never been easier!  With Connect-U, job-seekers can find their dream job and employers find their perfect candidate with just a few clicks. We offer a career service platform that links job-seekers and employers together. Employers can post their jobs and choose the best candidates. Job-seekers can create their profile and apply to job postings of their choice. All in a secure and safe environment with our login system. 
 
 ##  Features
 
