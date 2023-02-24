@@ -31,19 +31,18 @@ Job hunting has never been easier!  With Connect-U, job-seekers can find their d
 
 ## Technologies
 
-- PHP
+- Django
 - HTML
 - CSS
-- JavaScript
 - SQL
 
-The front-end of the website will be developed using HTML, CSS, and JavaScript, while the back-end will be built with JavaScript, PHP. The database will be constructed using SQL, and communication between the back-end and database will be facilitated through PHP. The initial development steps will focus on creating the front-end of the website, followed by the back-end and database implementation. Finally, the React framework will be employed to enhance the overall appearance of the website.
+The front-end and back-end will be entirely created with Django, while our knowledge of HTML, and CSS will be incorporated into the Django framework. The database will be constructed using SQL, and communication between the back-end and database will be facilitated through Django. The initial development steps will focus on creating the front-end of the website, followed by the back-end and database implementation.
 
 ##  Team Members and Roles
 
 - Abdelaziz Mekkaoui - [Abdel1107](https://github.com/Abdel1107) - Frontend Developer
 - Emeka Okechukwu - [emeka-okechukwu-dev](https://github.com/emeka-okechukwu-dev) - Backend Developer & Database Administrator
 - Ishai Cohen - [L3CH3R0](https://github.com/L3CH3R0) - Scrum Master & Database Administrator 
-- Jeremy Rimokh - [J3rrimmy](https://github.com/J3rrimmy) - Backend Developer
+- Jeremy Rimokh - [J3rrimmy](https://github.com/J3rrimmy) - Backend Developer & Frontend Developer
 - Kadir Altinay - [kadiralt](https://github.com/kadiralt) - Backend Developer
 - Paul Touma - [Rubello21](https://github.com/Rubello21) - Backend Developer & Frontend Developer
