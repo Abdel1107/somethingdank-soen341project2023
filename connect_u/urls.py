@@ -17,8 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from student_portal.views import home, RegisterView
 
+from django.contrib.auth import views as auth_views
+from student_portal.views import CustomLoginView
+from student_portal.forms import LoginForm
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('student_portal.urls')),
     path('register/', RegisterView.as_view(), name='student_portal-register'),
+    path('login/', CustomLoginView.as_view(redirect_authenticated_user=True, template_name='student_portal/login.html',
+                                           authentication_form=LoginForm), name='student_portal-login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='student_portal/logout.html'),
+         name='student_portal-logout'),
 ]
