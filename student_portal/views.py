@@ -5,6 +5,8 @@ from django.views import View
 from django.contrib.auth.views import LoginView
 from .forms import RegisterForm, LoginForm
 
+from django.contrib.auth.decorators import login_required
+
 
 def home(request):
     return render(request, 'student_portal/home.html')
@@ -57,3 +59,7 @@ class CustomLoginView(LoginView):
         # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLoginView, self).form_valid(form)
 
+
+@login_required
+def profile(request):
+    return render(request, 'student_portal/profile.html')
