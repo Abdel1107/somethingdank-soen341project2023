@@ -17,7 +17,7 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
     
-     def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs):
         super().save()
 
         img = Image.open(self.avatar.path)

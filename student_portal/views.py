@@ -7,6 +7,11 @@ from .forms import RegisterForm, LoginForm, UpdateUserForm, UpdateProfileForm
 
 from django.contrib.auth.decorators import login_required
 
+from job_postings.models import JobPosting
+from django.db.models import Q
+
+from datetime import date
+
 
 def home(request):
     return render(request, 'student_portal/home.html')
@@ -82,3 +87,24 @@ def profile(request):
 
     return render(request, 'student_portal/profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
+
+@login_required
+def job_postings(request):
+    search_query = request.GET.get('search')
+    job_type_filter = request.GET.get('job_type')
+    today = date.today()
+
+    if search_query:
+        available_jobs = JobPosting.objects.filter(Q(title__icontains=search_query))
+    elif job_type_filter:
+        available_jobs = JobPosting.objects.filter(job_type=job_type_filter)
+    else:
+        available_jobs = JobPosting.objects.all()
+
+    # Filter out job postings with application deadlines that have already passed
+    available_jobs = available_jobs.filter(application_deadline__gte=today)
+
+    # Sort by earliest deadline
+    available_jobs = available_jobs.order_by('application_deadline')
+
+    return render(request, 'student_portal/job_postings.html', {'job_postings': available_jobs})
