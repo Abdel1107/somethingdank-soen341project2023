@@ -18,7 +18,7 @@ from django.urls import path, include
 from student_portal.views import home, RegisterView
 
 from django.contrib.auth import views as auth_views
-from student_portal.views import CustomLoginView, profile
+from student_portal.views import CustomLoginView, profile, job_postings
 from student_portal.forms import LoginForm
 
 from django.conf import settings
@@ -33,4 +33,5 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='student_portal/logout.html'),
          name='student_portal-logout'),
     path('profile/', profile, name='student_portal-profile'),
+    path('job_postings/', job_postings, name='student_portal-job_postings'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

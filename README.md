@@ -4,6 +4,8 @@
 
 Job hunting has never been easier!  With Connect-U, job-seekers can find their dream job and employers find their perfect candidate with just a few clicks. We offer a career service platform that links job-seekers and employers together. Employers can post their jobs and choose the best candidates. Job-seekers can create their profile and apply to job postings of their choice. All in a secure and safe environment with our login system. 
 
+Video demo for Sprint 2 available [here](https://drive.google.com/file/d/132k782-jbailm14Soty-LhX0_sUU1kuK/view?usp=share_link).
+
 ##  Features
 
 ### Employer Features

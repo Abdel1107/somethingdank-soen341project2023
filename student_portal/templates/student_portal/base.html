@@ -30,11 +30,11 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <a href="#" class="nav-item nav-link" style="color: #D8D8D8; font-size: 18px">
+                    <a href="{% url 'student_portal-job_postings' %}" class="nav-item nav-link" style="color: #D8D8D8; font-size: 18px">
                         <span class="fas fa-hand-holding-usd"></span>
                         Job Postings
                     </a>
-                    <a href="#" class="nav-item nav-link" style="color: #D8D8D8; font-size: 18px">
+                    <a href="{% url 'student_portal-profile' %}" class="nav-item nav-link" style="color: #D8D8D8; font-size: 18px">
                         <span>| </span>
                         <span class="fas fa-user"></span>
                         Profile
