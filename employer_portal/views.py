@@ -6,7 +6,7 @@ from django.views import View
 from django.contrib.auth.models import Group
 
 from job_postings.models import JobPosting
-from .forms import EmployerRegisterForm, EmployerLoginForm
+from .forms import EmployerRegisterForm, EmployerLoginForm, JobPostingForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 
@@ -101,3 +101,19 @@ def manage_job_postings(request):
     available_jobs = available_jobs.order_by('application_deadline')
 
     return render(request, 'employer_portal/manage_job_postings.html', {'job_postings': available_jobs})
+
+@login_required
+def create_job_posting(request):
+    if request.method == 'POST':
+        form = JobPostingForm(request.POST)
+        if form.is_valid():
+            job_posting = form.save(commit=False)
+            job_posting.employer = request.user
+            job_posting.save()
+            messages.success(request, 'Job posting created successfully.')
+            return redirect('employer_portal-manage_job_postings')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = JobPostingForm()
+    return render(request, 'employer_portal/create_job_posting.html', {'form': form})

@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
+from job_postings.models import JobPosting
+
 
 class EmployerRegisterForm(UserCreationForm):
     # fields we want to include and customize in our form
@@ -63,3 +65,10 @@ class EmployerLoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'remember_me']
+
+
+class JobPostingForm(forms.ModelForm):
+    class Meta:
+        model = JobPosting
+        fields = ['title', 'company_name', 'job_type', 'job_category', 'location', 'salary', 'description',
+                  'requirements', 'application_deadline', 'contact_info']
