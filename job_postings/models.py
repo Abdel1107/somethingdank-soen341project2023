@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -13,6 +14,7 @@ class JobPosting(models.Model):
 
     job_id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=255)
+    employer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='job_postings')
     company_name = models.CharField(max_length=255)
     job_type = models.CharField(max_length=255, choices=JOB_TYPE_CHOICES)
     job_category = models.CharField(max_length=255, choices=JOB_CATEGORY_CHOICES)
@@ -24,4 +26,4 @@ class JobPosting(models.Model):
     contact_info = models.CharField(max_length=255)
 
     def __str__(self):
-        return self.title
+        return f"Job ID: {self.job_id}"

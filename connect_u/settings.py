@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'student_portal',
-    'job_postings'
+    'job_postings',
+    'employer_portal'
 ]
 
 MIDDLEWARE = [
