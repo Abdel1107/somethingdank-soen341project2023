@@ -37,7 +37,7 @@ class EmployerRegisterView(View):
             user = form.save()
 
             # Add user to "employers" group
-            user.groups.add(Group.objects.get(name='employers'))
+            # user.groups.add(Group.objects.get(name='employers'))
 
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
