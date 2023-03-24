@@ -24,7 +24,7 @@ from student_portal.forms import LoginForm
 from django.conf import settings
 from django.conf.urls.static import static
 
-from employer_portal.views import employer_home, EmployerRegisterView, EmployerCustomLoginView
+from employer_portal.views import employer_home, EmployerRegisterView, EmployerCustomLoginView, manage_job_postings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,4 +43,5 @@ urlpatterns = [
                                            authentication_form=LoginForm), name='employer_portal-login'),
     path('employer_logout/', auth_views.LogoutView.as_view(template_name='employer_portal/logout.html'),
          name='employer_portal-logout'),
+    path('manage_job_postings/', manage_job_postings, name='employer_portal-manage_job_postings'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

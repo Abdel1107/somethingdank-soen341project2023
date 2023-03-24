@@ -1,11 +1,18 @@
+from datetime import date
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth.models import Group
 
+from job_postings.models import JobPosting
 from .forms import EmployerRegisterForm, EmployerLoginForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+
+from django.contrib.auth.decorators import login_required
+
+from django.db.models import Q
 
 
 # Create your views here.
@@ -66,3 +73,31 @@ class EmployerCustomLoginView(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('employer_portal-home')
+
+
+@login_required
+def manage_job_postings(request):
+    search_query = request.GET.get('search')
+    job_type_filter = request.GET.get('job_type')
+    today = date.today()
+
+    # Retrieve the current user instance
+    current_user = request.user
+
+    if search_query:
+        available_jobs = JobPosting.objects.filter(Q(title__icontains=search_query))
+    elif job_type_filter:
+        available_jobs = JobPosting.objects.filter(job_type=job_type_filter)
+    else:
+        available_jobs = JobPosting.objects.all()
+
+    # Filter out job postings with application deadlines that have already passed
+    available_jobs = available_jobs.filter(application_deadline__gte=today)
+
+    # Filter job postings by employer user
+    available_jobs = available_jobs.filter(employer=current_user)
+
+    # Sort by earliest deadline
+    available_jobs = available_jobs.order_by('application_deadline')
+
+    return render(request, 'employer_portal/manage_job_postings.html', {'job_postings': available_jobs})
