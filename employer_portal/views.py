@@ -119,6 +119,7 @@ def create_job_posting(request):
         form = JobPostingForm()
     return render(request, 'employer_portal/create_job_posting.html', {'form': form})
 
+
 @login_required
 def update_job_posting(request):
     if request.method == 'POST':
@@ -133,4 +134,15 @@ def update_job_posting(request):
             messages.error(request, 'Please correct the errors below.')
     else:
         messages.error(request, 'Invalid request.')
+    return redirect('employer_portal-manage_job_postings')
+
+
+@login_required
+def delete_job_posting(request, job_id):
+    job = get_object_or_404(JobPosting, pk=job_id)
+    if request.user == job.employer:
+        job.delete()
+        messages.success(request, 'Job posting deleted successfully.')
+    else:
+        messages.error(request, 'You are not authorized to delete this job posting.')
     return redirect('employer_portal-manage_job_postings')
