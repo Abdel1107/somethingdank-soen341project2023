@@ -35,7 +35,8 @@
                     {% endif %}
                  </div>
               </div>
-           </form>
+            </form>
+            <a href="#" class="btn btn-dark ml-auto" data-toggle="modal" data-target="#createJobModal">Create New Job Posting</a>
         </div>
         <div style="margin-bottom: 20px;"></div>
         <table class="table">
@@ -62,6 +63,86 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="modal fade" id="createJobModal" tabindex="-1" role="dialog" aria-labelledby="createJobModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="createJobModalLabel">Create New Job Posting</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form method="post" action="{% url 'create_job_posting' %}">
+                          {% csrf_token %}
+                          <div class="form-group">
+                              <label for="title">Title:</label>
+                              <input type="text" name="title" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="company_name">Company Name:</label>
+                              <input type="text" name="company_name" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                             <label for="job_type">Job Type:</label>
+                             <select name="job_type" class="form-control" required>
+                                 <option value="" selected disabled>Select job type</option>
+                                 <option value="Full-time">Full-time</option>
+                                 <option value="Part-time">Part-time</option>
+                                 <option value="Contract">Contract</option>
+                                 <option value="Temporary">Temporary</option>
+                                 <option value="Volunteer">Volunteer</option>
+                                 <option value="Internship">Internship</option>
+                                 <option value="Other">Other</option>
+                            </select>
+                          </div>
+                          <div class="form-group">
+                              <label for="job_category">Job Category:</label>
+                              <select name="job_category" class="form-control" required>
+                                  <option value="" selected disabled>Select job category</option>
+                                  <option value="Education">Education</option>
+                                  <option value="Business">Business</option>
+                                  <option value="Healthcare">Healthcare</option>
+                                  <option value="Technology">Technology</option>
+                                  <option value="Arts and entertainment">Arts and entertainment</option>
+                                  <option value="Other">Other</option>
+                              </select>
+                          </div>
+                          <div class="form-group">
+                              <label for="location">Location:</label>
+                              <input type="text" name="location" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="salary">Salary:</label>
+                              <input type="text" name="salary" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="description">Description:</label>
+                              <textarea name="description" class="form-control" rows="5" required></textarea>
+                          </div>
+                          <div class="form-group">
+                              <label for="requirements">Requirements:</label>
+                              <textarea name="requirements" class="form-control" rows="5" required></textarea>
+                          </div>
+                          <div class="form-group">
+                              <label for="application_deadline">Application Deadline:</label>
+                              <input type="date" name="application_deadline" class="form-control" required>
+                          </div>
+                          <div class="form-group">
+                              <label for="contact_info">Contact Info:</label>
+                              <input type="text" name="contact_info" class="form-control" required>
+                          </div>
+                          <input type="hidden" name="employer" value="{{ request.user.profile.pk }}">
+                          <button type="submit" class="btn btn-primary">Create Job Posting</button>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+        </div>
 
         {% for job in job_postings %}
             <div class="modal fade" id="jobModal-{{ job.job_id }}" tabindex="-1" role="dialog" aria-labelledby="jobModalLabel-{{ job.job_id }}" aria-hidden="true">
