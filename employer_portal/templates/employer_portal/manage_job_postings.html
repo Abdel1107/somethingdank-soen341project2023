@@ -57,7 +57,7 @@
                         <td>{{ job.title }}</td>
                         <td>{{ job.location }}</td>
                         <td>{{ job.application_deadline }}</td>
-                        <td class="eye-column"><a href="#" data-toggle="modal" data-target="#viewCandidates">View Candidates</a></td>
+                        <td class="eye-column"><a href="#" data-toggle="modal" data-target="#viewCandidates-{{ job.job_id }}">View Candidates</a></td>
                         <td class="eye-column"><a href="#" data-toggle="modal" data-target="#deleteJobModal-{{ job.job_id }}"><i class="fa fa-trash" style="color: #004085;"></i></a></td>
                     </tr>
                 {% empty %}
@@ -304,46 +304,49 @@
             </div>
         {% endfor %}
 
-        <div class="modal fade" id="viewCandidates" tabindex="-1" role="dialog" aria-labelledby="viewCandidatesLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewCandidatesLabel">Candidates for Job Title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Date Applied</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Student 1</td>
-                                    <td>2022-01-01</td>
-                                    <td>Resume not available</td>
-                                    <td><a href="#">Select Candidate</a></td>
-                                </tr>
-                                <tr>
-                                    <td>Student 2</td>
-                                    <td>2022-01-02</td>
-                                    <td><a href="#">View Resume</a></td>
-                                    <td><a href="#">Select Candidate</a></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">No candidates yet.</td>
-                                </tr>
-                            </tbody>
-                        </table>
+        {% for job in job_postings %}
+            <div class="modal fade" id="viewCandidates-{{ job.job_id }}" tabindex="-1" role="dialog" aria-labelledby="viewCandidatesLabel-{{ job.job_id }}" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="viewCandidatesLabel-{{ job.job_id }}">Candidates for {{ job.title }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Date Applied</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for job_application in job.jobapplication_set.all %}
+                                        <tr>
+                                            <td>{{ job_application.student_username }}</td>
+                                            <td>{{ job_application.date_applied }}</td>
+                                            {% with student=job_application.student_username %}
+                                                {% if student.resume %}
+                                                    <td><a href="{{ student.resume.url }}" target="_blank">View Resume</a></td>
+                                                {% else %}
+                                                    <td>Resume not available</td>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3">No candidates yet.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}

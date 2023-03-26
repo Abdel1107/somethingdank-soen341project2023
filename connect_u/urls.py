@@ -25,7 +25,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from employer_portal.views import employer_home, EmployerRegisterView, EmployerCustomLoginView, manage_job_postings, \
-    create_job_posting, update_job_posting, delete_job_posting
+    create_job_posting, update_job_posting, delete_job_posting, view_candidates
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -49,4 +49,5 @@ urlpatterns = [
     path('create_job_posting/', create_job_posting, name='create_job_posting'),
     path('update_job_posting/', update_job_posting, name='update_job_posting'),
     path('delete_job_posting/<int:job_id>/', delete_job_posting, name='delete_job_posting'),
+    path('job/<int:job_id>/candidates/', view_candidates, name='view_candidates'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
