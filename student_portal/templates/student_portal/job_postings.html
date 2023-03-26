@@ -83,6 +83,12 @@
                             <p><strong>Salary:</strong> {{ job.salary }}</p>
                             <p><strong>Application Deadline:</strong> {{ job.application_deadline }}</p>
                             <p><strong>Contact Info:</strong> {{ job.contact_info }}</p>
+                            <form method="POST" action="{% url 'apply_for_job' job.job_id %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="student_username" value="{{ request.user.profile }}">
+                                <input type="hidden" name="job_id" value="{{ job.job_id }}">
+                                <button type="submit" class="btn btn-primary">Apply</button>
+                            </form>
                         </div>
                     </div>
                 </div>
