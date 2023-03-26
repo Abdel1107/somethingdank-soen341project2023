@@ -127,3 +127,31 @@ def apply_for_job(request, job_id):
         return redirect('student_portal-job_postings')
 
     return render(request, 'student_portal/job_postings.html', {'job': job})
+
+
+@login_required
+def view_job_applications(request):
+    search_query = request.GET.get('search')
+    job_type_filter = request.GET.get('job_type')
+    today = date.today()
+
+    if search_query:
+        available_jobs = JobPosting.objects.filter(Q(title__icontains=search_query))
+    elif job_type_filter:
+        available_jobs = JobPosting.objects.filter(job_type=job_type_filter)
+    else:
+        available_jobs = JobPosting.objects.all()
+
+    # Filter out job postings with application deadlines that have already passed
+    available_jobs = available_jobs.filter(application_deadline__gte=today)
+
+    # Get the job applications for the current user's profile
+    job_applications = JobApplication.objects.filter(student_username=request.user.profile)
+
+    # Create a list of job posting IDs for the current user's job applications
+    applied_job_ids = [job_application.job_id_id for job_application in job_applications]
+
+    # Filter the available jobs to only include the job postings that the current user has applied to
+    available_jobs = available_jobs.filter(job_id__in=applied_job_ids)
+
+    return render(request, 'student_portal/view_job_applications.html', {'job_postings': available_jobs, 'job_applications': job_applications})
