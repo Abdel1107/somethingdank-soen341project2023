@@ -6,6 +6,8 @@ Job hunting has never been easier!  With Connect-U, job-seekers can find their d
 
 Video demo for Sprint 2 available [here](https://drive.google.com/file/d/132k782-jbailm14Soty-LhX0_sUU1kuK/view?usp=share_link).
 
+Video demo for Sprint 3 available [here](https://drive.google.com/file/d/1OTBmVnM8NBz5jl-MPx8tMevJds6QkRcx/view?usp=share_link).
+
 ##  Features
 
 ### Employer Features
