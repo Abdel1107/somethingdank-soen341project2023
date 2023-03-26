@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from student_portal.views import home, RegisterView
+from student_portal.views import home, RegisterView, apply_for_job
 
 from django.contrib.auth import views as auth_views
 from student_portal.views import CustomLoginView, profile, job_postings
@@ -37,6 +37,7 @@ urlpatterns = [
          name='student_portal-logout'),
     path('profile/', profile, name='student_portal-profile'),
     path('job_postings/', job_postings, name='student_portal-job_postings'),
+    path('apply_for_job/<int:job_id>/', apply_for_job, name='apply_for_job'),
 
     path('employer_home/', employer_home, name='employer_portal-home'),
     path('employer_register/', EmployerRegisterView.as_view(), name='employer_portal-register'),

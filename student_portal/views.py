@@ -12,6 +12,9 @@ from django.db.models import Q
 
 from datetime import date
 
+from job_applications.models import JobApplication
+from .models import Profile
+
 
 def home(request):
     return render(request, 'student_portal/home.html')
@@ -108,3 +111,19 @@ def job_postings(request):
     available_jobs = available_jobs.order_by('application_deadline')
 
     return render(request, 'student_portal/job_postings.html', {'job_postings': available_jobs})
+
+
+@login_required
+def apply_for_job(request, job_id):
+    job = JobPosting.objects.get(pk=job_id)
+    student_profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        application = JobApplication.objects.create(
+            student_username=student_profile,
+            job_id=job,
+        )
+        messages.success(request, 'You have successfully applied for this job.')
+        return redirect('student_portal-job_postings')
+
+    return render(request, 'student_portal/job_postings.html', {'job': job})
