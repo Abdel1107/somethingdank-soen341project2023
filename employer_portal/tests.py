@@ -82,3 +82,31 @@ class UpdateJobPostingTestCase(TestCase):
         self.assertEqual(self.job_posting.requirements, 'Updated Test Requirements')
         self.assertEqual(str(self.job_posting.application_deadline), '2023-04-02')
         self.assertEqual(self.job_posting.contact_info, 'Updated Test Contact Info')
+
+
+class DeleteJobPostingTestCase(TestCase):
+    def setUp(self):
+        # create a test user and a test job posting
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.job_posting = JobPosting.objects.create(
+            title='Test Job',
+            employer=self.user,
+            company_name='Test Company',
+            job_type='Full-time',
+            job_category='Technology',
+            location='Test Location',
+            salary='Test Salary',
+            description='Test Description',
+            requirements='Test Requirements',
+            application_deadline='2023-04-01',
+            contact_info='Test Contact Info',
+        )
+
+    def test_delete_job_posting(self):
+        # log in as the test user and delete the test job posting
+        self.client.login(username='testuser', password='testpass')
+        response = self.client.post(f'/delete_job_posting/{self.job_posting.pk}/')
+
+        # assert that the job posting was deleted successfully
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(JobPosting.objects.count(), 0)
