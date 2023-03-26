@@ -146,3 +146,8 @@ def delete_job_posting(request, job_id):
     else:
         messages.error(request, 'You are not authorized to delete this job posting.')
     return redirect('employer_portal-manage_job_postings')
+
+@login_required
+def view_candidates(request, job_id):
+    job = JobPosting.objects.get(job_id=job_id)
+    return render(request, 'employer_portal/manage_job_postings.html', {'job': job})
