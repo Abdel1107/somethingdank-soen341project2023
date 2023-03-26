@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.views import View
 from django.contrib.auth.models import Group
 
+from job_applications.models import JobApplication
 from job_postings.models import JobPosting
 from .forms import EmployerRegisterForm, EmployerLoginForm, JobPostingForm
 from django.contrib.auth.views import LoginView
@@ -13,6 +14,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
 
 from django.db.models import Q
+
+from django.core.mail import send_mail
+from django.http import HttpResponseBadRequest
 
 
 # Create your views here.
@@ -151,3 +155,24 @@ def delete_job_posting(request, job_id):
 def view_candidates(request, job_id):
     job = JobPosting.objects.get(job_id=job_id)
     return render(request, 'employer_portal/manage_job_postings.html', {'job': job})
+
+@login_required
+def select_candidate(request, job_application_id):
+    job_application = JobApplication.objects.get(id=job_application_id)
+    subject = request.GET.get('subject')
+    body = request.GET.get('body')
+    email = request.GET.get('email')
+    if subject and body and email:
+        send_mail(
+            subject=subject,
+            message=body,
+            from_email='your_email@example.com',
+            recipient_list=[email],
+            fail_silently=False,
+        )
+        job_application.status = 'Selected'
+        job_application.save()
+        messages.success(request, 'Notification successfully sent to candidate.')
+        return redirect('employer_portal-manage_job_postings')
+    else:
+        return HttpResponseBadRequest('Invalid request')

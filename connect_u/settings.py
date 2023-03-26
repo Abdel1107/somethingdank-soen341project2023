@@ -136,3 +136,10 @@ LOGIN_URL = 'student_portal-login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # replace with your SMTP host
+EMAIL_PORT = 587  # replace with your SMTP port number
+EMAIL_USE_TLS = True  # if required
+EMAIL_HOST_USER = 'chuks.egkdev@gmail.com'  # replace with your SMTP username
+EMAIL_HOST_PASSWORD = 'cezhesrengdzpqri'  # replace with your SMTP password

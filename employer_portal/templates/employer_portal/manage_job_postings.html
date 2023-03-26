@@ -321,6 +321,7 @@
                                         <th>Username</th>
                                         <th>Date Applied</th>
                                         <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -335,6 +336,7 @@
                                                     <td>Resume not available</td>
                                                 {% endif %}
                                             {% endwith %}
+                                            <td><a href="{% url 'select_candidate' job_application.id %}?subject=Update%20on%20application&body=Hello%20{{ job_application.student_username.user.first_name }},%0A%0AThank%20you%20for%20applying%20for%20{{ job.title }}.%0A%0AYou%20have%20been%20accepted%20for%20an%20interview.%20The%20employer%20will%20contact%20you%20shortly%20with%20a%20time.%0A%0AThanks.&email={{ job_application.student_username.user.email }}">Select Candidate</a></td>
                                         </tr>
                                     {% empty %}
                                         <tr>
