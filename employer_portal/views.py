@@ -1,6 +1,6 @@
 from datetime import date
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.views import View
 from django.contrib.auth.models import Group
@@ -102,6 +102,7 @@ def manage_job_postings(request):
 
     return render(request, 'employer_portal/manage_job_postings.html', {'job_postings': available_jobs})
 
+
 @login_required
 def create_job_posting(request):
     if request.method == 'POST':
@@ -117,3 +118,19 @@ def create_job_posting(request):
     else:
         form = JobPostingForm()
     return render(request, 'employer_portal/create_job_posting.html', {'form': form})
+
+@login_required
+def update_job_posting(request):
+    if request.method == 'POST':
+        job_id = request.POST.get('job_id')
+        job_posting = get_object_or_404(JobPosting, pk=job_id, employer=request.user.profile.pk)
+        form = JobPostingForm(request.POST, instance=job_posting)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Job posting updated successfully.')
+            return redirect('employer_portal-manage_job_postings')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        messages.error(request, 'Invalid request.')
+    return redirect('employer_portal-manage_job_postings')
