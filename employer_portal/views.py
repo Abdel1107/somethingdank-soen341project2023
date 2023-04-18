@@ -7,7 +7,8 @@ from django.contrib.auth.models import Group
 
 from job_applications.models import JobApplication
 from job_postings.models import JobPosting
-from .forms import EmployerRegisterForm, EmployerLoginForm, JobPostingForm
+from .forms import EmployerRegisterForm, EmployerLoginForm, JobPostingForm, EmployerUpdateUserForm, \
+    EmployerUpdateProfileForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 
@@ -176,3 +177,21 @@ def select_candidate(request, job_application_id):
         return redirect('employer_portal-manage_job_postings')
     else:
         return HttpResponseBadRequest('Invalid request')
+
+
+@login_required
+def employer_profile(request):
+    if request.method == 'POST':
+        user_form = EmployerUpdateUserForm(request.POST, instance=request.user)
+        profile_form = EmployerUpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='employer_portal-employer_profile')
+    else:
+        user_form = EmployerUpdateUserForm(instance=request.user)
+        profile_form = EmployerUpdateProfileForm(instance=request.user.profile)
+
+    return render(request, 'employer_portal/employer_profile.html', {'user_form': user_form, 'profile_form': profile_form})
