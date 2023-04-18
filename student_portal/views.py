@@ -124,7 +124,7 @@ def apply_for_job(request, job_id):
             job_id=job,
         )
         messages.success(request, 'You have successfully applied for this job.')
-        return redirect('student_portal-job_postings')
+        return redirect('student_portal-view_job_applications')
 
     return render(request, 'student_portal/job_postings.html', {'job': job})
 

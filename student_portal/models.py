@@ -13,6 +13,9 @@ class Profile(models.Model):
     school = models.CharField(max_length=150)
     skills = models.CharField(max_length=200)
     resume = models.FileField(upload_to='resumes', null=True, blank=True)
+    company_name = models.CharField(max_length=100, default='')
+    website = models.CharField(max_length=200, default='')
+    location = models.CharField(max_length=200, default='')
 
     def __str__(self):
         return self.user.username
