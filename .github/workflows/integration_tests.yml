@@ -26,3 +26,6 @@ jobs:
 
     - name: Run Employer Portal tests
       run: python manage.py test employer_portal
+
+    - name: Run Student Portal tests
+      run: python manage.py test student_portal
