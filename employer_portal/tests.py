@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from job_applications.models import JobApplication
 from job_postings.models import JobPosting
+from django.contrib.messages import get_messages
 
 
 # Create your tests here.
@@ -110,3 +112,49 @@ class DeleteJobPostingTestCase(TestCase):
         # assert that the job posting was deleted successfully
         self.assertEqual(response.status_code, 302)
         self.assertEqual(JobPosting.objects.count(), 0)
+
+
+class SelectCandidateTestCase(TestCase):
+    def setUp(self):
+        # create a test user
+        self.user = User.objects.create_user(username='testuser', password='testpass')
+
+        # create a job posting
+        self.job_posting = JobPosting.objects.create(
+            title='Test Job',
+            employer=self.user,
+            company_name='Test Company',
+            job_type='Full-time',
+            job_category='Technology',
+            location='Test Location',
+            salary='Test Salary',
+            description='Test Description',
+            requirements='Test Requirements',
+            application_deadline='2023-04-01',
+            contact_info='Test Contact Info',
+        )
+
+        # create a job application
+        self.job_application = JobApplication.objects.create(
+            student_username=self.user.profile,
+            job_id=self.job_posting,
+        )
+
+    def test_select_candidate(self):
+        # log in as the employer
+        self.client.login(username='testuser', password='testpass')
+
+        # call the view function that selects a candidate
+        response = self.client.get(f'/select_candidate/{self.job_application.id}/', {
+            'subject': 'Test Subject',
+            'body': 'Test Body',
+            'email': 'test@example.com',
+        })
+
+        # assert that the candidate was selected successfully
+        self.assertEqual(response.status_code, 302)
+        job_application = JobApplication.objects.get(id=self.job_application.id)
+        self.assertEqual(job_application.status, 'Selected')
+        messages = list(get_messages(response.wsgi_request))
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(str(messages[0]), 'Notification successfully sent to candidate.')
