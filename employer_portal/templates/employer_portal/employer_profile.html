@@ -4,7 +4,8 @@
     <div class="container-fluid">
         <h2 class="text-left mb-5" style="color: #004085;"><span class="fa fa-user"></span> My Profile</h2>
         <div class="row my-3 p-3">
-            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" style="cursor: pointer;">
+            <img class="rounded-circle account-img" src="{{ user.profile.avatar.url }}" alt="{{ user.username }}'s profile picture" style="cursor: pointer;">
+
         </div>
         {% if user_form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">

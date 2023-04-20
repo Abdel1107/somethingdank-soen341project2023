@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Profile
 
 
+# This form handles student registration
 class RegisterForm(UserCreationForm):
     # fields we want to include and customize in our form
     first_name = forms.CharField(max_length=100,
@@ -45,6 +46,7 @@ class RegisterForm(UserCreationForm):
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
 
+# This form handles student login
 class LoginForm(AuthenticationForm):
     username = forms.CharField(max_length=100,
                                required=True,
@@ -66,6 +68,7 @@ class LoginForm(AuthenticationForm):
         fields = ['username', 'password', 'remember_me']
 
 
+# This form handles student updating their user
 class UpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100,
                                required=True,
@@ -78,6 +81,7 @@ class UpdateUserForm(forms.ModelForm):
         fields = ['username', 'email']
 
 
+# This form handles student updating their profile
 class UpdateProfileForm(forms.ModelForm):
     avatar = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
     bio = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'rows': 5}))

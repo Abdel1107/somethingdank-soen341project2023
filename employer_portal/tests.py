@@ -6,6 +6,14 @@ from django.contrib.messages import get_messages
 
 
 # Create your tests here.
+TEST_COMPANY = 'Test Company'
+TEST_CONTACT_INFO = 'Test Contact Info'
+TEST_JOB = 'Test Job'
+TEST_REQUIREMENTS = 'Test Requirements'
+TEST_LOCATION = 'Test Location'
+TEST_SALARY = 'Test Salary'
+TEST_DESCRIPTION = 'Test Description'
+
 class AddJobPostingTestCase(TestCase):
     def test_add_job_posting(self):
         # create a test user and log them in
@@ -14,23 +22,23 @@ class AddJobPostingTestCase(TestCase):
 
         # call the view function that adds a job posting
         response = self.client.post('/create_job_posting/', {
-            'title': 'Test Job',
-            'company_name': 'Test Company',
+            'title': TEST_JOB,
+            'company_name': TEST_COMPANY,
             'job_type': 'Full-time',
             'job_category': 'Technology',
-            'location': 'Test Location',
-            'salary': 'Test Salary',
-            'description': 'Test Description',
-            'requirements': 'Test Requirements',
+            'location': TEST_LOCATION,
+            'salary': TEST_SALARY,
+            'description': TEST_DESCRIPTION,
+            'requirements': TEST_REQUIREMENTS,
             'application_deadline': '2023-04-01',
-            'contact_info': 'Test Contact Info',
+            'contact_info': TEST_CONTACT_INFO,
         })
 
         # assert that the job posting was created successfully
         self.assertEqual(response.status_code, 302)
         self.assertEqual(JobPosting.objects.count(), 1)
         job_posting = JobPosting.objects.first()
-        self.assertEqual(job_posting.title, 'Test Job')
+        self.assertEqual(job_posting.title, TEST_JOB)
         self.assertEqual(job_posting.employer, user)
 
 
@@ -42,17 +50,17 @@ class UpdateJobPostingTestCase(TestCase):
 
         # create a test job posting
         self.job_posting = JobPosting.objects.create(
-            title='Test Job',
+            title=TEST_JOB,
             employer=self.user,
-            company_name='Test Company',
+            company_name=TEST_COMPANY,
             job_type='Full-time',
             job_category='Technology',
-            location='Test Location',
-            salary='Test Salary',
-            description='Test Description',
-            requirements='Test Requirements',
+            location=TEST_LOCATION,
+            salary=TEST_SALARY,
+            description=TEST_DESCRIPTION,
+            requirements=TEST_REQUIREMENTS,
             application_deadline='2023-04-01',
-            contact_info='Test Contact Info',
+            contact_info=TEST_CONTACT_INFO,
         )
 
     def test_update_job_posting(self):
@@ -91,17 +99,17 @@ class DeleteJobPostingTestCase(TestCase):
         # create a test user and a test job posting
         self.user = User.objects.create_user(username='testuser', password='testpass')
         self.job_posting = JobPosting.objects.create(
-            title='Test Job',
+            title=TEST_JOB,
             employer=self.user,
-            company_name='Test Company',
+            company_name=TEST_COMPANY,
             job_type='Full-time',
             job_category='Technology',
-            location='Test Location',
-            salary='Test Salary',
-            description='Test Description',
-            requirements='Test Requirements',
+            location=TEST_LOCATION,
+            salary=TEST_SALARY,
+            description=TEST_DESCRIPTION,
+            requirements=TEST_REQUIREMENTS,
             application_deadline='2023-04-01',
-            contact_info='Test Contact Info',
+            contact_info=TEST_CONTACT_INFO,
         )
 
     def test_delete_job_posting(self):
@@ -121,17 +129,17 @@ class SelectCandidateTestCase(TestCase):
 
         # create a job posting
         self.job_posting = JobPosting.objects.create(
-            title='Test Job',
+            title=TEST_JOB,
             employer=self.user,
-            company_name='Test Company',
+            company_name=TEST_COMPANY,
             job_type='Full-time',
             job_category='Technology',
-            location='Test Location',
-            salary='Test Salary',
-            description='Test Description',
-            requirements='Test Requirements',
+            location=TEST_LOCATION,
+            salary=TEST_SALARY,
+            description=TEST_DESCRIPTION,
+            requirements=TEST_REQUIREMENTS,
             application_deadline='2023-04-01',
-            contact_info='Test Contact Info',
+            contact_info=TEST_CONTACT_INFO,
         )
 
         # create a job application
