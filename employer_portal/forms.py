@@ -6,6 +6,7 @@ from job_postings.models import JobPosting
 
 from student_portal.models import Profile
 
+# This form handles employer registration
 class EmployerRegisterForm(UserCreationForm):
     # fields we want to include and customize in our form
     first_name = forms.CharField(max_length=100,
@@ -47,6 +48,7 @@ class EmployerRegisterForm(UserCreationForm):
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
 
+# This form handles employer login
 class EmployerLoginForm(AuthenticationForm):
     username = forms.CharField(max_length=100,
                                required=True,
@@ -68,6 +70,7 @@ class EmployerLoginForm(AuthenticationForm):
         fields = ['username', 'password', 'remember_me']
 
 
+# This form handles the job posting form for employers
 class JobPostingForm(forms.ModelForm):
     class Meta:
         model = JobPosting
@@ -75,6 +78,7 @@ class JobPostingForm(forms.ModelForm):
                   'requirements', 'application_deadline', 'contact_info']
 
 
+# This form handles employer updating their user
 class EmployerUpdateUserForm(forms.ModelForm):
     username = forms.CharField(max_length=100,
                                required=True,
@@ -87,6 +91,7 @@ class EmployerUpdateUserForm(forms.ModelForm):
         fields = ['username', 'email']
 
 
+# This form handles employer updating their profile
 class EmployerUpdateProfileForm(forms.ModelForm):
     company_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'class': 'form-control'}))
     website = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'class': 'form-control'}))

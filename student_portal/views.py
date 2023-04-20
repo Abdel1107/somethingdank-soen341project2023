@@ -16,10 +16,12 @@ from job_applications.models import JobApplication
 from .models import Profile
 
 
+# This view displays the home page for the student portal
 def home(request):
     return render(request, 'student_portal/home.html')
 
 
+# This view handles the registration form for students
 class RegisterView(View):
     form_class = RegisterForm
     initial = {'key': 'value'}
@@ -51,6 +53,7 @@ class RegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
+# This view handles the login form for students
 class CustomLoginView(LoginView):
     form_class = LoginForm
 
@@ -73,6 +76,7 @@ def profile(request):
     return render(request, 'student_portal/profile.html')
 
 
+# This view updates the students profile
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -91,6 +95,7 @@ def profile(request):
     return render(request, 'student_portal/profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
 
+# This view gets all job postings
 @login_required
 def job_postings(request):
     search_query = request.GET.get('search')
@@ -113,13 +118,14 @@ def job_postings(request):
     return render(request, 'student_portal/job_postings.html', {'job_postings': available_jobs})
 
 
+# This view allows students to apply to job postings
 @login_required
 def apply_for_job(request, job_id):
     job = JobPosting.objects.get(pk=job_id)
     student_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        application = JobApplication.objects.create(
+        JobApplication.objects.create(
             student_username=student_profile,
             job_id=job,
         )
@@ -129,6 +135,7 @@ def apply_for_job(request, job_id):
     return render(request, 'student_portal/job_postings.html', {'job': job})
 
 
+# This view allows students to view job applications
 @login_required
 def view_job_applications(request):
     search_query = request.GET.get('search')

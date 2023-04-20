@@ -21,10 +21,12 @@ from django.http import HttpResponseBadRequest
 
 
 # Create your views here.
+# This view displays the home page for the employer portal
 def employer_home(request):
     return render(request, 'employer_portal/home.html')
 
 
+# This view handles the registration form for employers
 class EmployerRegisterView(View):
     form_class = EmployerRegisterForm
     initial = {'key': 'value'}
@@ -46,10 +48,7 @@ class EmployerRegisterView(View):
         form = self.form_class(request.POST)
 
         if form.is_valid():
-            user = form.save()
-
-            # Add user to "employers" group
-            # user.groups.add(Group.objects.get(name='employers'))
+            form.save()
 
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}')
@@ -59,6 +58,7 @@ class EmployerRegisterView(View):
         return render(request, self.template_name, {'form': form})
 
 
+# This view handles the login form for employers
 class EmployerCustomLoginView(LoginView):
     form_class = EmployerLoginForm
     success_url = reverse_lazy('employer_portal-home')
@@ -80,6 +80,7 @@ class EmployerCustomLoginView(LoginView):
         return reverse_lazy('employer_portal-home')
 
 
+# This view gets job postings made by employers
 @login_required
 def manage_job_postings(request):
     search_query = request.GET.get('search')
@@ -108,6 +109,7 @@ def manage_job_postings(request):
     return render(request, 'employer_portal/manage_job_postings.html', {'job_postings': available_jobs})
 
 
+# This view allow employers to add a new job posting
 @login_required
 def create_job_posting(request):
     if request.method == 'POST':
@@ -125,6 +127,7 @@ def create_job_posting(request):
     return render(request, 'employer_portal/create_job_posting.html', {'form': form})
 
 
+# This view allows employers to update their job posting
 @login_required
 def update_job_posting(request):
     if request.method == 'POST':
@@ -142,6 +145,7 @@ def update_job_posting(request):
     return redirect('employer_portal-manage_job_postings')
 
 
+# # This view allows employers to delete their job posting
 @login_required
 def delete_job_posting(request, job_id):
     job = get_object_or_404(JobPosting, pk=job_id)
@@ -152,11 +156,15 @@ def delete_job_posting(request, job_id):
         messages.error(request, 'You are not authorized to delete this job posting.')
     return redirect('employer_portal-manage_job_postings')
 
+
+# This view allows employers to view candidates that applied to their job posting
 @login_required
 def view_candidates(request, job_id):
     job = JobPosting.objects.get(job_id=job_id)
     return render(request, 'employer_portal/manage_job_postings.html', {'job': job})
 
+
+# This view allows employers to notify candidates that they have been chosen for the job
 @login_required
 def select_candidate(request, job_application_id):
     job_application = JobApplication.objects.get(id=job_application_id)
@@ -179,6 +187,7 @@ def select_candidate(request, job_application_id):
         return HttpResponseBadRequest('Invalid request')
 
 
+# This view allows employers to be able to update their profile
 @login_required
 def employer_profile(request):
     if request.method == 'POST':
